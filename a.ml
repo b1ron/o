@@ -1,8 +1,11 @@
 open Base
+open Stdio
 
-let first_if_true test x y =
-  if test x then x else y
+let rec read_and_accumulate accum =
+  let line = In_channel.input_line In_channel.stdin in
+  match line with
+  | None -> accum
+  | Some x -> read_and_accumulate (accum +. Float.of_string x)
 
-let big_number x = x > 3;;
-
-first_if_true big_number 4 3 
+let () =
+  printf "Total: %F\n" (read_and_accumulate 0.)
